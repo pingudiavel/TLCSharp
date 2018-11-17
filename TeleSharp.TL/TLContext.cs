@@ -12,7 +12,7 @@ namespace TeleSharp.TL
     {
         private static Dictionary<int, Type> Types;
 
-        static TLContext()
+        public static void Init()
         {
             Types = new Dictionary<int, Type>();
             Types = (from t in Assembly.GetExecutingAssembly().GetTypes()
@@ -20,9 +20,8 @@ namespace TeleSharp.TL
                      where t.IsSubclassOf(typeof(TLObject))
                      where t.GetCustomAttribute(typeof(TLObjectAttribute)) != null
                      select t).ToDictionary(x => ((TLObjectAttribute)x.GetCustomAttribute(typeof(TLObjectAttribute))).Constructor, x => x);
-            Types.Add(481674261, typeof(TLVector<>));
+            //Types.Add(481674261, typeof(TLVector<>));
         }
-
         public static Type getType(int Constructor)
         {
             return Types[Constructor];

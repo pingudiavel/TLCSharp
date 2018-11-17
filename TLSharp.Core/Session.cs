@@ -9,23 +9,38 @@ namespace TLSharp.Core
     public interface ISessionStore
     {
         void Save(Session session);
-        Session Load(string sessionUserId);
+        Session Load(string sessionUserId, string SessionPath = null);
     }
 
     public class FileSessionStore : ISessionStore
     {
         public void Save(Session session)
         {
-            using (var stream = new FileStream($"{session.SessionUserId}.dat", FileMode.OpenOrCreate))
+
+            string Path = string.Empty;
+
+            if (session.SessionPath != null)
+                Path += session.SessionPath;
+
+            Path += session.SessionUserId;
+
+            using (var stream = new FileStream($"{Path}.dat", FileMode.OpenOrCreate))
             {
                 var result = session.ToBytes();
                 stream.Write(result, 0, result.Length);
             }
         }
 
-        public Session Load(string sessionUserId)
+        public Session Load(string sessionUserId, string SessionPath = null)
         {
-            var sessionFileName = $"{sessionUserId}.dat";
+            string Path = string.Empty;
+
+            if (SessionPath != null)
+                Path += SessionPath;
+
+            Path += sessionUserId;
+
+            var sessionFileName = $"{Path}.dat";
             if (!File.Exists(sessionFileName))
                 return null;
 
@@ -34,7 +49,7 @@ namespace TLSharp.Core
                 var buffer = new byte[2048];
                 stream.Read(buffer, 0, 2048);
 
-                return Session.FromBytes(buffer, this, sessionUserId);
+                return Session.FromBytes(buffer, this, sessionUserId, SessionPath);
             }
         }
     }
@@ -46,7 +61,7 @@ namespace TLSharp.Core
 
         }
 
-        public Session Load(string sessionUserId)
+        public Session Load(string sessionUserId, string SessionPath = null)
         {
             return null;
         }
@@ -54,11 +69,14 @@ namespace TLSharp.Core
 
     public class Session
     {
-	    private const string defaultConnectionAddress = "149.154.175.100";//"149.154.167.50";
+	    private const string defaultConnectionAddress = "149.154.167.50";//"149.154.167.50";
 
 		private const int defaultConnectionPort = 443;
 
         public string SessionUserId { get; set; }
+
+        public string SessionPath { get; set; }
+
         public string ServerAddress { get; set; }
         public int Port { get; set; }
         public AuthKey AuthKey { get; set; }
@@ -109,7 +127,7 @@ namespace TLSharp.Core
             }
         }
 
-        public static Session FromBytes(byte[] buffer, ISessionStore store, string sessionUserId)
+        public static Session FromBytes(byte[] buffer, ISessionStore store, string sessionUserId, string sessionPath = null)
         {
             using (var stream = new MemoryStream(buffer))
             using (var reader = new BinaryReader(stream))
@@ -144,6 +162,7 @@ namespace TLSharp.Core
                     SessionExpires = sessionExpires,
                     TLUser = TLUser,
                     SessionUserId = sessionUserId,
+                    SessionPath = sessionPath,
                     ServerAddress = serverAddress,
                     Port = port
                 };
@@ -155,12 +174,13 @@ namespace TLSharp.Core
             _store.Save(this);
         }
 
-        public static Session TryLoadOrCreateNew(ISessionStore store, string sessionUserId)
+        public static Session TryLoadOrCreateNew(ISessionStore store, string sessionUserId, string SessionPath = null)
         {
-            return store.Load(sessionUserId) ?? new Session(store)
+            return store.Load(sessionUserId, SessionPath) ?? new Session(store)
             {
                 Id = GenerateRandomUlong(),
                 SessionUserId = sessionUserId,
+                SessionPath = SessionPath,
                 ServerAddress = defaultConnectionAddress,
                 Port = defaultConnectionPort
             };

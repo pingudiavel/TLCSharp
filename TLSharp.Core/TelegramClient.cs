@@ -21,17 +21,17 @@ namespace TLSharp.Core
 {
     public class TelegramClient : IDisposable
     {
-        private MtProtoSender _sender;
-        private AuthKey _key;
-        private TcpTransport _transport;
-        private string _apiHash = "";
-        private int _apiId = 0;
-        private Session _session;
-        private List<TLDcOption> dcOptions;
-        private TcpClientConnectionHandler _handler;
+        protected MtProtoSender _sender;
+        protected AuthKey _key;
+        protected TcpTransport _transport;
+        protected string _apiHash = "";
+        protected int _apiId = 0;
+        protected Session _session;
+        protected List<TLDcOption> dcOptions;
+        protected TcpClientConnectionHandler _handler;
 
         public TelegramClient(int apiId, string apiHash,
-            ISessionStore store = null, string sessionUserId = "session", TcpClientConnectionHandler handler = null)
+            ISessionStore store = null, string sessionUserId = "session", string sessionPath = null, TcpClientConnectionHandler handler = null)
         {
             if (apiId == default(int))
                 throw new MissingApiConfigurationException("API_ID");
@@ -41,11 +41,12 @@ namespace TLSharp.Core
             if (store == null)
                 store = new FileSessionStore();
 
+            TLContext.Init();
             _apiHash = apiHash;
             _apiId = apiId;
             _handler = handler;
 
-            _session = Session.TryLoadOrCreateNew(store, sessionUserId);
+            _session = Session.TryLoadOrCreateNew(store, sessionUserId, sessionPath);
             _transport = new TcpTransport(_session.ServerAddress, _session.Port, _handler);
         }
 

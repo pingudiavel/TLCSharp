@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <LangVersion>7.2</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <LangVersion>7.2</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Requests\AuthSendCodeRequest.cs" />
+    <Compile Remove="Requests\AuthSignInRequest.cs" />
+    <Compile Remove="Requests\DownloadFileRequest.cs" />
+    <Compile Remove="Requests\InitConnectionRequest.cs" />
+    <Compile Remove="Requests\MTProtoRequest.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Ionic.Zlib.Core" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TeleSharp.TL\TeleSharp.TLC.csproj" />
+  </ItemGroup>
+
+</Project>

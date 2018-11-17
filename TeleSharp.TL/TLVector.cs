@@ -19,6 +19,11 @@ namespace TeleSharp.TL
             set { lists[index] = value; }
         }
 
+        public List<T> listItems
+        {
+            get { return lists; }
+        }
+
         public override int Constructor
         {
             get
