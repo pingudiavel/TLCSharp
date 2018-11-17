@@ -1,4 +1,4 @@
-TLSharp
+# TLSharp
 -------------------------------
 
 Unofficial Telegram (http://telegram.org) client library implemented in C# on .NET Core.
