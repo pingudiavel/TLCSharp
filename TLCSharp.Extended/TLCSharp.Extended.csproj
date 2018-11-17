@@ -2,6 +2,21 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <Authors>pingudiavel</Authors>
+    <Company></Company>
+    <Copyright></Copyright>
+    <Description>Unofficial Telegram (http://telegram.org) client library implemented in C# on .NET Core.
+This project is based on TLSharp Project by sochix (https://github.com/sochix/TLSharp).</Description>
+    <PackageProjectUrl></PackageProjectUrl>
+    <RepositoryUrl>https://github.com/pingudiavel/TLCSharp</RepositoryUrl>
+    <RepositoryType>GitHub</RepositoryType>
+    <PackageTags>Telegram API</PackageTags>
+    <PackageReleaseNotes>.NET Core 2.1
+Multiuser
+Custom Session Path
+SendBotButton (TLRequestGetBotCallbackAnswer)</PackageReleaseNotes>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageLicenseUrl>https://github.com/pingudiavel/TLCSharp/blob/master/LICENSE</PackageLicenseUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
