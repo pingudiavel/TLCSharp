@@ -20,11 +20,67 @@ See official wiki at [TLSharp Starter Guide](https://github.com/sochix/TLSharp/#
 
 -------------------------------
 
+# SendBotButton Sample
+
+```csharp
+		// get last inline buttons
+        public async Task<List<InlineButton>> get_lastinlinebuttons(int count = 1, int offset = 0)
+        {
+            await Task.Delay(250);
+            var Chat_Messages = await client.GetHistoryAsync(peer, offset, 0, count);
+
+            TLMessagesSlice ChatBot_Messages = Chat_Messages as TLMessagesSlice;
+
+            List<InlineButton> list_inlinebuttons = new List<InlineButton>();
+            InlineButton tmp_inlinebuttons = null;
+
+            foreach (TLMessage message in ChatBot_Messages.Messages)
+            {
+                tmp_inlinebuttons = new InlineButton();
+
+                tmp_inlinebuttons.message_id = message.Id;
+                tmp_inlinebuttons.text = message.Message;
+
+                TLReplyInlineMarkup List_InlineButtons = message.ReplyMarkup as TLReplyInlineMarkup;
+
+                if (List_InlineButtons != null)
+                {
+                    foreach (TLKeyboardButtonRow row in List_InlineButtons.Rows)
+                    {
+                        if (row != null)
+                        {
+                            foreach (TLKeyboardButtonCallback button in row.Buttons)
+                            {
+                                tmp_inlinebuttons.list_choises.Add(new InlineButton.Choises(_text: button.Text, _data: button.Data));
+                            }
+                        }
+                    }
+                }
+
+                list_inlinebuttons.Add(tmp_inlinebuttons);
+            }
+
+            return list_inlinebuttons;
+        }
+```
+
+```csharp
+        List<InlineButton> listInlineButton = await get_lastinlinebuttons(1, 0);
+
+        if (listInlineButton.Count > 0)
+        {
+            InlineButton InlineButton = listInlineButton.First();
+			// Send Inline button to bot
+			// for the client use TelegramClientExtended instead TelegramClient
+            await client.SendBotButton(peer, InlineButton.list_choises.First().data, InlineButton.message_id);
+        }
+```
+
+-------------------------------
+
 # Donate
 
 If this project help you reduce time to develop, you can give me a cup of coffee :)
-
-
 
 BTC: 18S52vQkMSGitySfrbA1QesnM2A4SYXkcw
 
