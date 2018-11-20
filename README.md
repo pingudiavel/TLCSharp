@@ -22,7 +22,7 @@ See official wiki at [TLSharp Starter Guide](https://github.com/sochix/TLSharp/#
 
 # SendBotButton Sample
 
-- Get the bot inline buttons (client is TelegramClientExtended and peer is TeleSharp.TL.TLInputPeerUser)
+- Get the bot inline buttons (client is [TelegramClientExtended](https://github.com/pingudiavel/TLCSharp/blob/master/TLCSharp.Extended/TelegramClientExtended.cs#L10) and peer is [TLInputPeerUser](https://github.com/pingudiavel/TLCSharp/blob/master/TeleSharp.TL/TL/TLInputPeerUser.cs#L11))
 
 ```csharp
 public async Task<List<InlineButton>> get_lastinlinebuttons(int count = 1, int offset = 0) {
