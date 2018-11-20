@@ -22,10 +22,7 @@ See official wiki at [TLSharp Starter Guide](https://github.com/sochix/TLSharp/#
 
 # SendBotButton Sample
 
-Requirements:
-- create a client as TelegramClientExtended instead TelegramClient
-
-1) Get the bot inline buttons (client is TelegramClientExtended and peer is TeleSharp.TL.TLInputPeerUser)
+- Get the bot inline buttons (client is TelegramClientExtended and peer is TeleSharp.TL.TLInputPeerUser)
 
 ```csharp
 public async Task<List<InlineButton>> get_lastinlinebuttons(int count = 1, int offset = 0) {
@@ -68,7 +65,7 @@ public async Task<List<InlineButton>> get_lastinlinebuttons(int count = 1, int o
 }
 ```
 
-2) Send the First InlineButton found
+- Send the First InlineButton found
 
 ```csharp
 List<InlineButton> listInlineButton = await get_lastinlinebuttons(1, 0);
