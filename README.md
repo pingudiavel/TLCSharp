@@ -2,7 +2,7 @@
 
 Unofficial Telegram (http://telegram.org) client library implemented in C# on .NET Core.
 
-This project is based on [TLSharp Project](https://github.com/sochix/TLSharp) by [sochix](https://github.com/sochix).
+This project is based on [TLSharp](https://github.com/sochix/TLSharp) by [sochix](https://github.com/sochix).
 
 -------------------------------
 
@@ -16,7 +16,7 @@ This project is based on [TLSharp Project](https://github.com/sochix/TLSharp) by
 
 # Starter Guide
 
-See official wiki at [TLSharp Project Starter Guide](https://github.com/sochix/TLSharp/#starter-guide)
+See official wiki at [TLSharp Starter Guide](https://github.com/sochix/TLSharp/#starter-guide)
 
 -------------------------------
 
